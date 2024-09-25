@@ -1,7 +1,5 @@
 import "dotenv/config";
-
-const analysisDataset: DataSet = require(process.env.DATASET_PATH ??
-  process.exit(1));
+import { analysisDataset } from "./config";
 
 function predictTestability(project: DataSetProject): number {
   const analysisMetrics = {

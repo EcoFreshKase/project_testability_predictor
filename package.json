@@ -17,6 +17,7 @@
     "typescript": "^5.5.4"
   },
   "dependencies": {
+    "csv": "^6.3.10",
     "dotenv": "^16.4.5",
     "fta-cli": "^2.0.1"
   }

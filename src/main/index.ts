@@ -1,5 +1,6 @@
 import "dotenv/config";
-import { analysisDataset } from "./config";
+import { AnalysisDataset } from "./config";
+import { getTestSet } from "./lib/parseCSV";
 
 function predictTestability(project: DataSetProject): number {
   const analysisMetrics = {
@@ -26,7 +27,7 @@ function predictTestability(project: DataSetProject): number {
 }
 
 let projectsTestability: { project: string; testability: number }[] =
-  analysisDataset.map((project) => ({
+  AnalysisDataset.map((project) => ({
     project: project.project,
     testability: predictTestability(project),
   }));
@@ -34,3 +35,5 @@ let projectsTestability: { project: string; testability: number }[] =
 console.log(
   projectsTestability.sort(({ testability: a }, { testability: b }) => a - b)
 );
+
+const testData = getTestSet();

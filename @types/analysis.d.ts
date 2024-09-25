@@ -1,17 +1,28 @@
+type DataSetFile = {
+  fileName: string;
+  cyclo: number;
+  uOpsAmt: number;
+  linesOfCode: number;
+};
+
 type DataSetProject = {
   project: string;
   filesAmt: number;
-  files: {
-    fileName: string;
-    cyclo: number;
-    commandAmt: number;
-    linesOfCode: number;
-  }[];
+  files: DataSetFile[];
 };
 
 type DataSet = DataSetProject[];
 
-type AdafestTrainingsData = {
+type TestabilityPredictFileMetrics = {
+  projName: string;
+  projFilesAmt: number;
+  fileName: string;
+  cyclo: number;
+  uOpsAmt: number;
+  linesOfCode: number;
+};
+
+type AdafestTrainingsDataFile = {
   Class: string;
   PK_CountLineCode: number;
   PK_CountLineCodeDecl: number;
@@ -268,3 +279,5 @@ type AdafestTrainingsData = {
   CSORD_NumberOfMethods: number;
   Testability: number;
 };
+
+type AdafestTrainingsData = AdafestTrainingsDataFile[];

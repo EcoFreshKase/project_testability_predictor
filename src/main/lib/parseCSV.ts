@@ -5,7 +5,7 @@ import {
 } from "../config";
 import { readFileSync } from "fs";
 
-export function getTestSet(num = 0): AdafestTrainingsData[] {
+export function getTestSet(num = 0): AdafestTrainingsData {
   return parse(
     readFileSync(
       `${AdafestTrainingsDataDir}/${AdafestTrainingsDataFileNames[num]}`,

@@ -1,4 +1,4 @@
-export const AnalysisDataset: DataSet = require(process.env.DATASET_PATH ??
+export const AnalysisDatasetCSV = require(process.env.DATASET_CSV_LIKE_PATH ??
   process.exit(1));
 
 export const AdafestTrainingsDataDir =

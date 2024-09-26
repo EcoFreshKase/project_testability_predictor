@@ -37,6 +37,13 @@ export function normalizeLinear(data: TestabilityData[]): TestabilityData[] {
     ...data.map((testabilityData) => testabilityData.predictedTestability)
   );
 
+  if (bestTestability < 0) {
+    console.error(
+      "Normalization failed. The min value in the given dataset is less than 0, which would cause problems in the normalization as the result could be a negative number."
+    );
+    process.exit(1);
+  }
+
   // Normalize the data by mapping the range of `predictedTestability` values
   // from [minTestability, maxTestability] to [0, 1].
   // and inverting it such hat the lowest value get a testability of 1 and the highest value get a testability of 0

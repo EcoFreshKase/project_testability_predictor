@@ -1,42 +1,74 @@
-export type ProjectTestabilityMap = {
-  project: string;
-  testability: number;
-}[];
+import { adafestMetricsMapper } from "./adafestMetricsMapper";
+import {
+  normalizeLinear,
+  preProcessAverage,
+  preProcessMedian,
+} from "./preProcessing";
 
-export const fileMetrics = {
-  filesAmt: 0.1,
-  cyclo: 0.4,
-  commandAmt: 0.3,
-  linesOfCode: 0.2,
+type FileMetrics = {
+  filesAmt: number;
+  cyclo: number;
+  commandAmt: number;
+  linesOfCode: number;
 };
 
-const analysisMetrics = {
-  filesAmt: 0.1,
-  files: { metrics: fileMetrics, importance: 0.9 },
-};
-
-export function predictProjectTestability(project: DataSetProject): number {
+export function predictFileTestability(
+  file: TestabilityPredictFileMetrics,
+  metrics: FileMetrics
+): number {
   return (
-    project.filesAmt * analysisMetrics.filesAmt +
-    project.files.reduce((acc, file) => {
-      return (
-        acc +
-        file.cyclo * analysisMetrics.files.metrics.cyclo +
-        file.uOpsAmt * analysisMetrics.files.metrics.commandAmt +
-        file.linesOfCode * analysisMetrics.files.metrics.linesOfCode
-      );
-    }, 0) /
-      project.files.length
+    file.projFilesAmt * metrics.filesAmt +
+    file.cyclo * metrics.cyclo +
+    file.uOpsAmt * metrics.commandAmt +
+    file.linesOfCode * metrics.linesOfCode
   );
 }
 
-export function predictFileTestability(
-  file: TestabilityPredictFileMetrics
+export function getFitnessOfMetrics(
+  adafestDataSet: AdafestTrainingsData,
+  metrics: FileMetrics
 ): number {
-  return (
-    file.projFilesAmt * fileMetrics.filesAmt +
-    file.cyclo * fileMetrics.cyclo +
-    file.uOpsAmt * fileMetrics.commandAmt +
-    file.linesOfCode * fileMetrics.linesOfCode
+  const testabilitySet = adafestDataSet.map((file) => {
+    const predictedTestability = predictFileTestability(
+      adafestMetricsMapper(file),
+      metrics
+    );
+
+    return {
+      testability: file.Testability,
+      predictedTestability,
+    };
+  });
+
+  // Preprocess data
+  const processedData = preProcessAverage(testabilitySet);
+  const normalizedData = normalizeLinear(processedData);
+
+  if (
+    Math.min(...normalizedData.map((d) => d.predictedTestability)) != 0 ||
+    Math.max(...normalizedData.map((d) => d.predictedTestability)) != 1
+  ) {
+    console.error(
+      "Normalization failed. Either the min is not 0 or the max is not 1."
+    );
+    process.exit(1);
+  }
+
+  // Calculate fitness
+  const fitness = normalizedData.reduce((acc, curr) => {
+    return acc + Math.abs(curr.testability - curr.predictedTestability);
+  }, 0);
+
+  console.log(
+    `min|max preProc: ${Math.min(
+      ...processedData.map((d) => d.predictedTestability)
+    )} | ${Math.max(...processedData.map((d) => d.predictedTestability))}`
   );
+  console.log(
+    `min|max normalized: ${Math.min(
+      ...normalizedData.map((d) => d.predictedTestability)
+    )} | ${Math.max(...normalizedData.map((d) => d.predictedTestability))}`
+  );
+  console.log(`amt of files analyzed: ${processedData.length}`);
+  return fitness;
 }

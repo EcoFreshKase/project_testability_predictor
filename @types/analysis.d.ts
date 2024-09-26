@@ -281,3 +281,8 @@ type AdafestTrainingsDataFile = {
 };
 
 type AdafestTrainingsData = AdafestTrainingsDataFile[];
+
+type TestabilityData = {
+  testability: number;
+  predictedTestability: number;
+};

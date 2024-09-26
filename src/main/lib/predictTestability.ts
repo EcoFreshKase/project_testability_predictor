@@ -70,5 +70,6 @@ export function getFitnessOfMetrics(
     )} | ${Math.max(...normalizedData.map((d) => d.predictedTestability))}`
   );
   console.log(`amt of files analyzed: ${processedData.length}`);
+  console.log(`average difference: ${fitness / normalizedData.length}`);
   return fitness;
 }

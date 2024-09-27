@@ -1,8 +1,18 @@
 import "dotenv/config";
 import { getTestSet } from "./lib/parseCSV";
-import { trainMetrics } from "./lib/backpropagation/backpropagation";
+import { analyzeDataSet } from "./lib/backpropagation/analyzeDataSet";
 
 const adafestTestData = getTestSet();
-const analysisMetrics = trainMetrics(adafestTestData, 0.001, 1000);
 
-console.log(analysisMetrics);
+console.log(
+  analyzeDataSet(
+    adafestTestData,
+    {
+      filesAmt: -0.03560177,
+      cyclo: 2.32488763,
+      commandAmt: -0.72015394,
+      linesOfCode: -2.74799329,
+    },
+    0.59891541
+  )
+);

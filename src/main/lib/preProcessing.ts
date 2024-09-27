@@ -29,20 +29,13 @@ export function preProcessAverage(data: TestabilityData[]): TestabilityData[] {
   );
 }
 
-export function normalizeLinear(data: TestabilityData[]): TestabilityData[] {
+export function normalizeMinMax(data: TestabilityData[]): TestabilityData[] {
   const worstTestability = Math.max(
     ...data.map((testabilityData) => testabilityData.predictedTestability)
   );
   const bestTestability = Math.min(
     ...data.map((testabilityData) => testabilityData.predictedTestability)
   );
-
-  if (bestTestability < 0) {
-    console.error(
-      "Normalization failed. The min value in the given dataset is less than 0, which would cause problems in the normalization as the result could be a negative number."
-    );
-    process.exit(1);
-  }
 
   // Normalize the data by mapping the range of `predictedTestability` values
   // from [minTestability, maxTestability] to [0, 1].

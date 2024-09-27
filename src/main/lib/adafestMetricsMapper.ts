@@ -3,7 +3,7 @@ export function adafestMetricsMapper(
 ): TestabilityPredictFileMetrics {
   return {
     projName: "",
-    projFilesAmt: project.PK_CountLineCode,
+    projFilesAmt: project.PK_CountDeclFile,
     fileName: project.Class,
     cyclo: project.CSORD_SumCyclomatic,
     uOpsAmt: project.CSLEX_NumberOfUniqueOperators,

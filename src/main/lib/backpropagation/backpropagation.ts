@@ -1,4 +1,4 @@
-import { FileMetrics } from "../predictTestability";
+import { FileMetrics, predictFileTestability } from "../predictTestability";
 import { prepareData } from "./prepData";
 
 export function trainMetrics(
@@ -20,7 +20,7 @@ export function trainMetrics(
   let epochLoss = 0;
   for (let e = 0; e < epochs; e++) {
     epochLoss = 0;
-    let trainingsData = prepareData(data, metrics);
+    let trainingsData = prepareData(data, metrics, predictFileTestability);
 
     for (const file of trainingsData) {
       const loss = errorFunction(file.predictedTestability, file.testability);
@@ -43,6 +43,7 @@ export function trainMetrics(
 
   return {
     metrics,
-    finalAvgLoss: epochLoss / prepareData(data, metrics).length,
+    finalAvgLoss:
+      epochLoss / prepareData(data, metrics, predictFileTestability).length,
   };
 }

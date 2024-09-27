@@ -1,13 +1,17 @@
-import { FileMetrics, predictFileTestability } from "../predictTestability";
+import { FileMetrics } from "../predictTestability";
 import { adafestMetricsMapper } from "../adafestMetricsMapper";
-import { normalizeLinear, preProcessAverage } from "../preProcessing";
+import { normalizeMinMax, preProcessAverage } from "../preProcessing";
 
 export function prepareData(
   adafestDataSet: AdafestTrainingsData,
-  metrics: FileMetrics
+  metrics: FileMetrics,
+  testabilityMapper: (
+    file: TestabilityPredictFileMetrics,
+    metrics: FileMetrics
+  ) => number
 ): TestabilityData[] {
   const testabilitySet = adafestDataSet.map((file) => {
-    const predictedTestability = predictFileTestability(
+    const predictedTestability = testabilityMapper(
       adafestMetricsMapper(file),
       metrics
     );
@@ -20,7 +24,7 @@ export function prepareData(
 
   // Preprocess data
   const processedData = preProcessAverage(testabilitySet);
-  const normalizedData = normalizeLinear(processedData);
+  const normalizedData = normalizeMinMax(processedData);
 
   if (
     Math.min(...normalizedData.map((d) => d.predictedTestability)) != 0 ||

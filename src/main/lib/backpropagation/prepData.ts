@@ -30,10 +30,9 @@ export function prepareData(
     Math.min(...normalizedData.map((d) => d.predictedTestability)) != 0 ||
     Math.max(...normalizedData.map((d) => d.predictedTestability)) != 1
   ) {
-    console.error(
+    throw Error(
       "Normalization failed. Either the min is not 0 or the max is not 1."
     );
-    process.exit(1);
   }
 
   return normalizedData;

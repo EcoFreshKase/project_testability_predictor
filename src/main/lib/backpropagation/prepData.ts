@@ -31,7 +31,9 @@ export function prepareData(
     Math.max(...normalizedData.map((d) => d.predictedTestability)) != 1
   ) {
     throw Error(
-      "Normalization failed. Either the min is not 0 or the max is not 1."
+      `Normalization failed. Either the min is not 0 or the max is not 1. Min|Max: ${Math.min(
+        ...normalizedData.map((d) => d.predictedTestability)
+      )} ${Math.max(...normalizedData.map((d) => d.predictedTestability))}`
     );
   }
 

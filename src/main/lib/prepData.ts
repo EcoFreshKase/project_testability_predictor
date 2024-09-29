@@ -1,6 +1,6 @@
-import { FileMetrics } from "../predictTestability";
-import { adafestMetricsMapper } from "../adafestMetricsMapper";
-import { normalizeMinMax, preProcessAverage } from "../preProcessing";
+import { FileMetrics } from "./predictTestability";
+import { adafestMetricsMapper } from "./adafestMetricsMapper";
+import { normalizeMinMax, preProcessAverage } from "./preProcessing";
 
 export function prepareData(
   adafestDataSet: AdafestTrainingsData,

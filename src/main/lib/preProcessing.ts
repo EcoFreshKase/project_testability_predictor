@@ -1,16 +1,3 @@
-export function preProcessMedian(data: TestabilityData[]): TestabilityData[] {
-  const median = data.sort((testabilityData1, testabilityData2) => {
-    return (
-      testabilityData1.predictedTestability -
-      testabilityData2.predictedTestability
-    );
-  })[Math.floor(data.length / 2)];
-  return data.filter(
-    (testability) =>
-      testability.predictedTestability < median.predictedTestability
-  );
-}
-
 /**
  * Filters the input array of `TestabilityData` objects to include only those
  * whose `predictedTestability` is less than twice the average `predictedTestability`

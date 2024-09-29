@@ -5,18 +5,6 @@ export type FileMetrics = {
   linesOfCode: number;
 };
 
-export function predictFileTestability(
-  file: TestabilityPredictFileMetrics,
-  metrics: FileMetrics
-): number {
-  return (
-    file.projFilesAmt * metrics.filesAmt +
-    file.cyclo * metrics.cyclo +
-    file.uOpsAmt * metrics.commandAmt +
-    file.linesOfCode * metrics.linesOfCode
-  );
-}
-
 export function createPredictFileTestabilityLinearRegression(
   intercept: number
 ): (file: TestabilityPredictFileMetrics, metrics: FileMetrics) => number {

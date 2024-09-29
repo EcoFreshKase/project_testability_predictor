@@ -1,18 +1,3 @@
-type DataSetFile = {
-  fileName: string;
-  cyclo: number;
-  uOpsAmt: number;
-  linesOfCode: number;
-};
-
-type DataSetProject = {
-  project: string;
-  filesAmt: number;
-  files: DataSetFile[];
-};
-
-type DataSet = DataSetProject[];
-
 type TestabilityPredictFileMetrics = {
   projName: string;
   projFilesAmt: number;

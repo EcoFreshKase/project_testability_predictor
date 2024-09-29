@@ -1,7 +1,7 @@
 import {
   createPredictFileTestabilityLinearRegression,
   FileMetrics,
-} from "../predictTestability";
+} from "./predictTestability";
 import { prepareData } from "./prepData";
 
 export function analyzeDataSet(

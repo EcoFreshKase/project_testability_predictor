@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { getTestSet } from "./lib/parseCSV";
-import { analyzeDataSet } from "./lib/backpropagation/analyzeDataSet";
+import { analyzeDataSet } from "./lib/analyzeDataSet";
 
 for (let i = 0; i < 5; i++) {
   try {
